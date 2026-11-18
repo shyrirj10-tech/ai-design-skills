@@ -10,21 +10,26 @@
 <meta property="og:image" content="og-image.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F6E4F'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='16' font-weight='700' fill='white' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M11 5h18a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2H11L2 16z' fill='%23FFD43B' stroke='%230E1A2B' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='11' cy='16' r='3' fill='%230E1A2B'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/regular/style.css">
+<link rel="stylesheet" href="assets/bold/style.css">
+<link rel="stylesheet" href="assets/fill/style.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <a class="skip button-sm" href="#main">Skip to content</a>
 
-<div class="announce caption-3">Free delivery on orders over Rs 2,999 · 7 day easy returns</div>
+<div class="announce caption-3">
+  <span><i class="ph-fill ph-truck"></i>Free delivery over Rs 2,999</span>
+  <span><i class="ph-fill ph-arrow-counter-clockwise"></i>7 day easy returns</span>
+</div>
 
-<div class="nav-shell" id="navShell">
+<div class="nav-shell">
   <nav class="nav" aria-label="Primary">
-    <a href="#top" class="logo" aria-label="Pricedekho home"><span class="logo-mark"><i class="ph-bold ph-tag"></i></span>Pricedekho</a>
+    <a href="#top" class="logo" aria-label="Pricedekho home">
+      <span class="logo-mark"><svg viewBox="0 0 32 24" aria-hidden="true"><path d="M10 2h18a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H10L2 12z" fill="#FFD43B" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="10" cy="12" r="2.5" fill="currentColor"/></svg></span>Pricedekho
+    </a>
     <div class="nav-links title-4">
       <a href="#top" aria-current="page">Home</a>
       <a href="#categories">Categories</a>
@@ -62,91 +67,69 @@
 </div>
 
 <main id="main">
-  <!-- HERO -->
+  <!-- HERO: search is the primary action, the price list shows what it does -->
   <section class="hero" id="top">
     <div class="wrap hero-grid">
       <div>
-        <span class="eyebrow tag soft caption-3"><i class="ph-fill ph-lightning"></i> Prices checked every 15 minutes</span>
-        <h1 class="heading-1">Pay the lowest price<br>without checking ten tabs</h1>
-        <p class="sub body-3 muted">Pricedekho lines up every trusted seller's price for the same product, then lets you buy from the cheapest one in a single checkout.</p>
-        <div class="hero-cta">
-          <a href="#deals" class="btn btn-primary btn-lg button-md">Shop today's lowest prices <i class="ph-bold ph-arrow-right"></i></a>
-        </div>
-        <div class="proof">
-          <div class="avatars" aria-hidden="true">
-            <span style="background:#0F6E4F">AR</span><span style="background:#E8590C">SK</span><span style="background:#4F46E5">HN</span><span style="background:#B45309">MZ</span>
-          </div>
-          <p class="caption-2 muted"><strong class="body-4" style="color:var(--text)">{{shopper_count}}</strong> shoppers compared before buying this month</p>
+        <h1 class="heading-1">Same phone.<br>Four prices.<br>Pay the lowest.</h1>
+        <p class="sub body-3 muted">Search any product and Pricedekho lines up every verified seller's price, delivery time and warranty, with the cheapest one tagged.</p>
+        <form class="big-search" id="heroSearch" role="search">
+          <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+          <label for="heroQ" class="sr">What are you buying?</label>
+          <input id="heroQ" type="search" placeholder="What are you buying?" autocomplete="off">
+          <button class="btn btn-primary btn-lg button-md" type="submit">Compare prices</button>
+        </form>
+        <div class="popular caption-2">
+          <span class="muted">Popular:</span>
+          <button type="button" data-q="Nova">Nova X12 Pro</button>
+          <button type="button" data-q="headphones">Headphones</button>
+          <button type="button" data-q="AC">Inverter AC</button>
+          <button type="button" data-q="TV">Smart TV</button>
         </div>
       </div>
 
-      <div class="compare rise" aria-label="Price comparison example">
-        <div class="compare-top">
-          <div class="prod-art" style="background:#E4EEF9;color:#1D4ED8"><i class="ph-duotone ph-device-mobile"></i></div>
-          <div>
-            <p class="caption-5 muted">Smartphones</p>
-            <p class="title-2">Nova X12 Pro · 256 GB</p>
-            <p class="caption-5 muted">4 sellers · updated 6 min ago</p>
-          </div>
+      <figure class="ladder" style="margin:0" aria-label="Example: four sellers' prices for one phone, with the lowest tagged">
+        <div class="ladder-art" id="ladderArt"></div>
+        <p class="ladder-name title-3">Nova X12 Pro, 256 GB</p>
+        <div class="receipt" id="receipt">
+          <div class="rline"><span class="who"><span class="title-4">CityHub Electronics</span><span class="caption-5 muted">Delivery tomorrow</span></span><span class="amt body-1">Rs 88,200</span></div>
+          <div class="rline"><span class="who"><span class="title-4">Shop Point</span><span class="caption-5 muted">Delivery in 4 days</span></span><span class="amt body-1">Rs 89,615</span></div>
+          <div class="rline"><span class="who"><span class="title-4">GadgetBazaar</span><span class="caption-5 muted">Delivery in 3 days</span></span><span class="amt body-1">Rs 86,950</span></div>
+          <div class="rline" data-win><span class="who"><span class="title-4">TechMandi</span><span class="caption-5 muted">Delivery in 2 days</span></span><span class="amt body-1">Rs 84,499</span><span class="ptag body-1">Rs 84,499</span></div>
         </div>
-        <div class="seller best">
-          <span class="seller-logo">TM</span>
-          <div><p class="title-4">TechMandi</p><p class="caption-5 muted">Delivery in 2 days</p></div>
-          <div class="price"><p class="body-1 mono">Rs 84,499</p><span class="tag caption-3">Lowest</span></div>
-        </div>
-        <div class="seller">
-          <span class="seller-logo">GB</span>
-          <div><p class="title-4">GadgetBazaar</p><p class="caption-5 muted">Delivery in 3 days</p></div>
-          <div class="price"><p class="body-4 mono">Rs 86,950</p></div>
-        </div>
-        <div class="seller">
-          <span class="seller-logo">CH</span>
-          <div><p class="title-4">CityHub Electronics</p><p class="caption-5 muted">Delivery tomorrow</p></div>
-          <div class="price"><p class="body-4 mono">Rs 88,200</p></div>
-        </div>
-        <div class="save-strip body-4"><i class="ph-bold ph-piggy-bank"></i> You save Rs 3,701 against the highest listed price</div>
-      </div>
+        <figcaption class="ladder-foot body-4"><i class="ph-fill ph-check-circle"></i>Rs 5,116 less than the highest price</figcaption>
+      </figure>
     </div>
   </section>
 
-  <!-- TRUST -->
   <div class="trust">
     <div class="wrap trust-grid">
-      <div class="trust-item"><i class="ph-duotone ph-truck"></i><div><p class="title-4">Free delivery</p><p class="caption-5 muted">On orders over Rs 2,999</p></div></div>
-      <div class="trust-item"><i class="ph-duotone ph-arrow-counter-clockwise"></i><div><p class="title-4">7 day returns</p><p class="caption-5 muted">No questions on sealed items</p></div></div>
-      <div class="trust-item"><i class="ph-duotone ph-shield-check"></i><div><p class="title-4">Verified sellers</p><p class="caption-5 muted">Every seller is vetted</p></div></div>
-      <div class="trust-item"><i class="ph-duotone ph-money"></i><div><p class="title-4">Cash on delivery</p><p class="caption-5 muted">Pay when it arrives</p></div></div>
+      <div class="trust-item"><i class="ph ph-truck"></i><div><p class="title-4">Free delivery</p><p class="caption-5 muted">On orders over Rs 2,999</p></div></div>
+      <div class="trust-item"><i class="ph ph-arrow-counter-clockwise"></i><div><p class="title-4">7 day returns</p><p class="caption-5 muted">On sealed items</p></div></div>
+      <div class="trust-item"><i class="ph ph-shield-check"></i><div><p class="title-4">Verified sellers</p><p class="caption-5 muted">Every seller is vetted</p></div></div>
+      <div class="trust-item"><i class="ph ph-money"></i><div><p class="title-4">Cash on delivery</p><p class="caption-5 muted">Pay when it arrives</p></div></div>
     </div>
   </div>
 
-  <!-- CATEGORIES -->
   <section id="categories">
     <div class="wrap">
-      <div class="sec-head rise">
-        <div>
-          <span class="eyebrow caption-3">Categories</span>
-          <h2 class="heading-3">Shop by what you need</h2>
-        </div>
-      </div>
-      <div class="cats rise" id="cats"></div>
+      <div class="sec-head"><h2 class="heading-4">Shop by category</h2></div>
+      <div class="cats" id="cats"></div>
     </div>
   </section>
 
-  <!-- DEALS / SHOP -->
   <section id="deals" style="padding-top:0">
     <div class="wrap">
-      <div class="sec-head rise">
+      <div class="sec-head">
         <div>
-          <span class="eyebrow caption-3"><i class="ph-fill ph-fire"></i> Today's deals</span>
-          <h2 class="heading-3">Lowest prices right now</h2>
-          <p class="body-3 muted">Every price below is the cheapest live offer across our sellers.</p>
+          <h2 class="heading-4">Lowest prices right now</h2>
+          <p class="body-3 muted">The yellow tag is the cheapest live offer across every seller.</p>
         </div>
         <div class="deal-bar">
           <span class="caption-2 muted">Deals refresh in</span>
           <div class="timer body-4 mono" id="timer" aria-live="off"><span>00</span><span>00</span><span>00</span></div>
         </div>
       </div>
-
       <div class="toolbar">
         <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
         <label><span class="sr">Sort products</span>
@@ -158,60 +141,46 @@
           </select>
         </label>
       </div>
-
       <div class="grid" id="grid" aria-live="polite"></div>
     </div>
   </section>
 
-  <!-- TAGLINE REVEAL (B11) -->
   <section class="reveal-sec">
     <div class="wrap">
-      <p class="heading-2 reveal-text" id="reveal">The same phone costs a different amount in every store. We show you all of them, so you only ever pay the lowest one.</p>
+      <p class="heading-2 reveal-text" id="reveal">The same phone costs a different amount in every store. We show you all of them, so you only ever pay the lowest.</p>
     </div>
   </section>
 
-  <!-- HOW IT WORKS -->
-  <section id="how" style="padding-top:0">
+  <section id="how">
     <div class="wrap">
-      <div class="sec-head rise">
-        <div>
-          <span class="eyebrow caption-3">How it works</span>
-          <h2 class="heading-3">From search to doorstep in three steps</h2>
-        </div>
-      </div>
+      <div class="sec-head"><h2 class="heading-4">From search to doorstep</h2></div>
       <div class="steps">
-        <article class="step rise"><div class="num"><i class="ph-bold ph-magnifying-glass"></i></div><h3 class="heading-6">Search once</h3><p class="body-3 muted">Type a product name. We pull live prices from every verified seller that stocks it.</p></article>
-        <article class="step rise"><div class="num"><i class="ph-bold ph-scales"></i></div><h3 class="heading-6">Compare side by side</h3><p class="body-3 muted">See price, delivery time and warranty for each seller on one screen, with the lowest marked.</p></article>
-        <article class="step rise"><div class="num"><i class="ph-bold ph-package"></i></div><h3 class="heading-6">Buy in one checkout</h3><p class="body-3 muted">Pay by card, wallet or cash on delivery. Track the order here, whichever seller ships it.</p></article>
+        <article class="step rise"><span class="num title-4">Step 1</span><h3 class="heading-6">Search once</h3><p class="body-3 muted">Type a product name. We pull live prices from every verified seller that stocks it.</p></article>
+        <article class="step rise"><span class="num title-4">Step 2</span><h3 class="heading-6">Compare side by side</h3><p class="body-3 muted">Price, delivery time and warranty for each seller on one screen, with the lowest tagged.</p></article>
+        <article class="step rise"><span class="num title-4">Step 3</span><h3 class="heading-6">Buy in one checkout</h3><p class="body-3 muted">Pay by card, wallet or cash on delivery. Track the order here, whichever seller ships it.</p></article>
       </div>
     </div>
   </section>
 
-  <!-- REVIEWS -->
   <section style="padding-top:0">
     <div class="wrap">
-      <div class="sec-head rise">
-        <div>
-          <span class="eyebrow caption-3">Shopper reviews</span>
-          <h2 class="heading-3">What buyers say</h2>
-        </div>
-      </div>
+      <div class="sec-head"><h2 class="heading-4">What buyers say</h2></div>
       <div class="reviews">
-        <article class="review rise"><div class="rating"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div><p class="body-3">{{testimonial_1}}</p><footer><span class="av" style="background:#0F6E4F">AR</span><div><p class="title-4">{{name_1}}</p><p class="caption-5 muted">{{city_1}}</p></div></footer></article>
-        <article class="review rise"><div class="rating"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div><p class="body-3">{{testimonial_2}}</p><footer><span class="av" style="background:#E8590C">SK</span><div><p class="title-4">{{name_2}}</p><p class="caption-5 muted">{{city_2}}</p></div></footer></article>
-        <article class="review rise"><div class="rating"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-duotone ph-star-half"></i></div><p class="body-3">{{testimonial_3}}</p><footer><span class="av" style="background:#4F46E5">HN</span><div><p class="title-4">{{name_3}}</p><p class="caption-5 muted">{{city_3}}</p></div></footer></article>
+        <article class="review"><div class="rating"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div><p class="body-3">{{testimonial_1}}</p><footer><span class="av" style="background:#0E1A2B">AR</span><div><p class="title-4">{{name_1}}</p><p class="caption-5 muted">{{city_1}}</p></div></footer></article>
+        <article class="review"><div class="rating"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div><p class="body-3">{{testimonial_2}}</p><footer><span class="av" style="background:#0A7D4F">SK</span><div><p class="title-4">{{name_2}}</p><p class="caption-5 muted">{{city_2}}</p></div></footer></article>
+        <article class="review"><div class="rating"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph ph-star"></i></div><p class="body-3">{{testimonial_3}}</p><footer><span class="av" style="background:#5A6577">HN</span><div><p class="title-4">{{name_3}}</p><p class="caption-5 muted">{{city_3}}</p></div></footer></article>
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
   <section id="faq" style="padding-top:0">
-    <div class="wrap">
-      <div class="sec-head rise" style="justify-content:center;text-align:center">
-        <div><span class="eyebrow caption-3">Questions</span><h2 class="heading-3">Before you buy</h2></div>
+    <div class="wrap faq-grid">
+      <div>
+        <h2 class="heading-4">Before you buy</h2>
+        <p class="body-3 muted" style="margin-top:var(--s-100);max-width:320px">Anything else, write to <a href="mailto:support@example.com" style="text-decoration:underline">support</a> and a person replies within a day.</p>
       </div>
       <div class="faq">
-        <details><summary class="title-2">How do you find the lowest price?<i class="ph ph-plus"></i></summary><p class="body-3 muted">We check each partner seller's listed price every 15 minutes and show the cheapest offer first. The full list stays visible so you can pick faster delivery if you prefer.</p></details>
+        <details><summary class="title-2">How do you find the lowest price?<i class="ph ph-plus"></i></summary><p class="body-3 muted">We check each partner seller's listed price every 15 minutes and tag the cheapest offer. The full list stays visible so you can pick faster delivery if you prefer.</p></details>
         <details><summary class="title-2">Who ships my order?<i class="ph ph-plus"></i></summary><p class="body-3 muted">The seller you choose ships it. Pricedekho handles payment and tracking, so you deal with one place for every order.</p></details>
         <details><summary class="title-2">Can I pay cash on delivery?<i class="ph ph-plus"></i></summary><p class="body-3 muted">Yes, on most products. Cards and mobile wallets are also accepted at checkout.</p></details>
         <details><summary class="title-2">What if the product is faulty?<i class="ph ph-plus"></i></summary><p class="body-3 muted">Request a return within 7 days from your orders page. We arrange pickup and refund once the seller confirms receipt.</p></details>
@@ -221,18 +190,21 @@
     </div>
   </section>
 
-  <!-- FINAL CTA -->
   <section style="padding-top:0">
     <div class="wrap">
-      <div class="final rise">
-        <h2 class="heading-3">Get a message when the price drops</h2>
-        <p class="body-3">One email a week with the biggest price drops on products you care about. Unsubscribe in one click.</p>
-        <form class="news" id="newsForm" novalidate>
-          <label for="email" class="sr">Email address</label>
-          <input id="email" type="email" placeholder="you@example.com" class="body-6" required aria-describedby="newsMsg">
-          <button class="btn button-md" type="submit">Get price alerts</button>
-        </form>
-        <p class="form-msg caption-2" id="newsMsg" role="status"></p>
+      <div class="final">
+        <div>
+          <h2 class="heading-3">Get told when the price drops</h2>
+          <p class="body-3">One email a week with the biggest drops on products you care about. Unsubscribe in one click.</p>
+        </div>
+        <div>
+          <form class="news" id="newsForm" novalidate>
+            <label for="email" class="sr">Email address</label>
+            <input id="email" type="email" placeholder="you@example.com" class="body-6" required aria-describedby="newsMsg">
+            <button class="btn button-md" type="submit">Get price alerts</button>
+          </form>
+          <p class="form-msg caption-2" id="newsMsg" role="status"></p>
+        </div>
       </div>
     </div>
   </section>
@@ -242,7 +214,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a href="#top" class="logo"><span class="logo-mark"><i class="ph-bold ph-tag"></i></span>Pricedekho</a>
+        <a href="#top" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 24" aria-hidden="true"><path d="M10 2h18a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H10L2 12z" fill="#FFD43B" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="10" cy="12" r="2.5" fill="currentColor"/></svg></span>Pricedekho</a>
         <p class="body-6 muted" style="margin-top:var(--s-200);max-width:300px">Compare prices from verified sellers and buy at the lowest one.</p>
       </div>
       <div><h4 class="title-4">Shop</h4><ul class="body-6"><li><a href="#categories">Categories</a></li><li><a href="#deals">Today's deals</a></li><li><a href="#how">How it works</a></li></ul></div>
@@ -256,20 +228,17 @@
   </div>
 </footer>
 
-<!-- Cart drawer -->
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer" aria-label="Shopping cart" aria-hidden="true">
   <div class="drawer-head"><h2 class="heading-6">Your cart</h2><button class="icon-btn" id="closeCart" aria-label="Close cart"><i class="ph ph-x"></i></button></div>
   <div class="drawer-body" id="cartBody"></div>
   <div class="drawer-foot" id="cartFoot"></div>
 </aside>
-
-<!-- Quick view -->
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle" aria-hidden="true"></div>
-
 <div class="toast body-4" id="toast" role="status"><i class="ph-fill ph-check-circle"></i><span></span></div>
 
 <script src="data.js"></script>
+<script src="art.js"></script>
 <script>
 (() => {
   const $ = s => document.querySelector(s);
@@ -279,21 +248,38 @@
     get(k, d){ try { return JSON.parse(localStorage.getItem(k)) ?? d } catch { return d } },
     set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)) } catch {} }
   };
-
-  const {CATS, P} = window;
+  const {CATS, P, ART} = window;
   const catOf = id => CATS.find(c => c.id === id);
   const save = x => x.m - x.p;
   const pct  = x => Math.round((x.m - x.p) / x.m * 100);
+  const escapeHTML = s => s.replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
-  /* ---------- State ---------- */
   let filter = 'all', sort = 'pop', query = '';
   let cart = store.get('pd_cart', {});
   let wish = new Set(store.get('pd_wish', []));
 
+  /* ---------- Hero: strike the dearer prices, then hang the tag on the lowest ---------- */
+  $('#ladderArt').innerHTML = ART('phone', '#3A3F47');
+  const lines = [...document.querySelectorAll('.rline')];
+  const mark = l => l.classList.add(l.hasAttribute('data-win') ? 'win' : 'struck');
+  if (reduce) lines.forEach(mark);
+  else lines.forEach((l, i) => setTimeout(() => mark(l), 700 + i * 380));
+
+  function runSearch(q){
+    query = q.trim().toLowerCase();
+    $('#searchDesktop').value = q; $('#searchMobile').value = q;
+    renderGrid(true);
+    $('#deals').scrollIntoView({behavior: reduce ? 'auto' : 'smooth'});
+  }
+  $('#heroSearch').addEventListener('submit', e => { e.preventDefault(); runSearch($('#heroQ').value) });
+  document.querySelector('.popular').addEventListener('click', e => {
+    const b = e.target.closest('[data-q]'); if (b){ $('#heroQ').value = b.textContent; runSearch(b.dataset.q) }
+  });
+
   /* ---------- Categories ---------- */
   $('#cats').innerHTML = CATS.map(c => `
     <button class="cat" data-cat="${c.id}">
-      <span class="ico" style="background:${c.bg};color:${c.fg}"><i class="ph-duotone ${c.icon}"></i></span>
+      <span class="art">${ART(c.art, c.col)}</span>
       <span><span class="title-3" style="display:block">${c.name}</span><span class="caption-5 muted">${c.count.toLocaleString('en-IN')} products</span></span>
     </button>`).join('');
   $('#chips').innerHTML = [{id:'all',name:'All'}, ...CATS].map(c =>
@@ -312,27 +298,27 @@
 
   /* ---------- Grid ---------- */
   function cardHTML(x){
-    const c = catOf(x.c), inCart = !!cart[x.id];
+    const inCart = !!cart[x.id];
     return `<article class="card">
-      <button class="card-media" style="background:${c.bg};color:${c.fg}" data-view="${x.id}" aria-label="Quick view ${x.n}">
-        ${x.badge ? `<span class="tag ${x.badge==='Deal'?'warm':''} caption-3">${x.badge}</span>` : ''}
-        <i class="ph-duotone ${x.i}"></i>
+      <button class="card-media" data-view="${x.id}" aria-label="Quick view ${x.n}">
+        ${x.badge ? `<span class="tag ${x.badge==='Deal'?'warm':'ink'} caption-3">${x.badge}</span>` : ''}
+        ${ART(x.art, x.col)}
+        <span class="ptag body-1">${fmt(x.p)}</span>
       </button>
       <button class="wish" data-wish="${x.id}" aria-pressed="${wish.has(x.id)}" aria-label="Save ${x.n} to wishlist"><i class="${wish.has(x.id)?'ph-fill':'ph'} ph-heart"></i></button>
       <div class="card-body">
         <h3 class="title-3"><a href="product.html?id=${x.id}" class="card-link">${x.n}</a></h3>
-        <div class="rating caption-5"><i class="ph-fill ph-star"></i>${x.r} <span>(${x.rc.toLocaleString('en-IN')})</span></div>
-        <div class="price-row"><span class="body-1 mono">${fmt(x.p)}</span><span class="caption-5 strike mono">${fmt(x.m)}</span><span class="caption-3 off">${pct(x)}% off</span></div>
-        <div class="sellers-note caption-5"><i class="ph ph-storefront"></i>Lowest of ${x.s} sellers</div>
-        <button class="btn btn-primary button-sm ${inCart?'added':''}" data-add="${x.id}">
+        <div class="price-row caption-5"><span class="strike mono">${fmt(x.m)}</span><span class="caption-3 off">${pct(x)}% off</span></div>
+        <div class="rating caption-5"><i class="ph-fill ph-star"></i>${x.r} (${x.rc.toLocaleString('en-IN')})<span class="sellers-note" style="margin-left:var(--s-75)"><i class="ph ph-storefront"></i>${x.s} sellers</span></div>
+        <button class="btn ${inCart ? 'added' : 'btn-ghost'} button-sm" data-add="${x.id}">
           <i class="ph-bold ${inCart?'ph-check':'ph-shopping-bag'}"></i>${inCart?'In cart':'Add to cart'}
         </button>
       </div>
     </article>`;
   }
   const skeleton = () => Array.from({length:8}, () => `<div class="card skeleton" aria-hidden="true">
-      <div class="sk" style="aspect-ratio:1/1"></div>
-      <div class="card-body"><div class="sk" style="height:16px;width:80%"></div><div class="sk" style="height:12px;width:40%"></div><div class="sk" style="height:20px;width:60%"></div><div class="sk" style="height:36px;margin-top:12px"></div></div>
+      <div class="sk" style="aspect-ratio:1/1;border-radius:var(--r-2xl)"></div>
+      <div class="card-body"><div class="sk" style="height:16px;width:80%"></div><div class="sk" style="height:12px;width:40%"></div><div class="sk" style="height:36px;margin-top:12px"></div></div>
     </div>`).join('');
 
   function renderGrid(withLoad){
@@ -342,7 +328,7 @@
       list.sort({pop:(a,b)=>b.pop-a.pop, low:(a,b)=>a.p-b.p, high:(a,b)=>b.p-a.p, save:(a,b)=>save(b)-save(a)}[sort]);
       grid.innerHTML = list.length ? list.map(cardHTML).join('') : `
         <div class="empty">
-          <i class="ph-duotone ph-magnifying-glass"></i>
+          <i class="ph ph-magnifying-glass"></i>
           <h3 class="heading-6" style="margin-top:var(--s-200)">No products match "${escapeHTML(query)}"</h3>
           <p class="body-6 muted">Try a shorter search like a brand or product type, or clear the filters to see every deal.</p>
           <button class="btn btn-ghost button-sm" id="clearAll">Clear search and filters</button>
@@ -350,11 +336,9 @@
     };
     if (withLoad){ grid.innerHTML = skeleton(); setTimeout(draw, 420) } else draw();
   }
-  const escapeHTML = s => s.replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-
   $('#grid').addEventListener('click', e => {
     const add = e.target.closest('[data-add]'), w = e.target.closest('[data-wish]'), v = e.target.closest('[data-view]');
-    if (e.target.closest('#clearAll')){ query=''; $('#searchDesktop').value=''; $('#searchMobile').value=''; setFilter('all'); return }
+    if (e.target.closest('#clearAll')){ query=''; ['#searchDesktop','#searchMobile','#heroQ'].forEach(s => $(s).value=''); setFilter('all'); return }
     if (add) addToCart(+add.dataset.add);
     if (w) toggleWish(+w.dataset.wish);
     if (v) openModal(+v.dataset.view);
@@ -377,8 +361,7 @@
   /* ---------- Wishlist ---------- */
   function toggleWish(id){
     wish.has(id) ? wish.delete(id) : wish.add(id);
-    store.set('pd_wish', [...wish]);
-    updateBadges(); renderGrid();
+    store.set('pd_wish', [...wish]); updateBadges(); renderGrid();
     toast(wish.has(id) ? 'Saved to wishlist' : 'Removed from wishlist');
   }
   $('#wishBtn').addEventListener('click', () => {
@@ -389,8 +372,7 @@
   /* ---------- Cart ---------- */
   const FREE_SHIP = 2999, SHIP = 199;
   function addToCart(id){
-    cart[id] = (cart[id] || 0) + 1;
-    persist(); renderGrid();
+    cart[id] = (cart[id] || 0) + 1; persist(); renderGrid();
     toast(`${P.find(x=>x.id===id).n} added to cart`);
   }
   function setQty(id, q){ if (q <= 0) delete cart[id]; else cart[id] = q; persist(); renderCart(); renderGrid() }
@@ -404,7 +386,7 @@
     const ids = Object.keys(cart).map(Number);
     if (!ids.length){
       $('#cartBody').innerHTML = `<div class="empty" style="border:0;padding:var(--s-700) 0">
-        <i class="ph-duotone ph-shopping-bag-open"></i>
+        <i class="ph ph-shopping-bag-open"></i>
         <h3 class="heading-6" style="margin-top:var(--s-200)">Your cart is empty</h3>
         <p class="body-6 muted">Browse today's deals to find the lowest price on what you need.</p>
         <a href="#deals" class="btn btn-primary button-sm" id="browseDeals">Browse deals</a></div>`;
@@ -412,9 +394,9 @@
     }
     let sub = 0;
     $('#cartBody').innerHTML = ids.map(id => {
-      const x = P.find(p=>p.id===id), c = catOf(x.c), q = cart[id]; sub += x.p*q;
+      const x = P.find(p=>p.id===id), q = cart[id]; sub += x.p*q;
       return `<div class="line-item">
-        <div class="prod-art" style="background:${c.bg};color:${c.fg}"><i class="ph-duotone ${x.i}"></i></div>
+        <div class="art">${ART(x.art, x.col)}</div>
         <div style="flex:1;min-width:0">
           <p class="title-4">${x.n}</p>
           <p class="caption-5 muted">Lowest of ${x.s} sellers</p>
@@ -434,14 +416,14 @@
       <div class="row body-6"><span class="muted">Subtotal</span><span class="mono">${fmt(sub)}</span></div>
       <div class="row body-6"><span class="muted">Delivery</span><span class="mono">${ship ? fmt(ship) : 'Free'}</span></div>
       <div class="row body-1"><span>Total</span><span class="mono">${fmt(sub+ship)}</span></div>
-      <button class="btn btn-primary btn-lg button-md" id="checkout">Checkout securely <i class="ph-bold ph-lock-simple"></i></button>`;
+      <button class="btn btn-primary btn-lg button-md" id="checkout"><i class="ph-bold ph-lock-simple"></i>Checkout securely</button>`;
   }
   $('#cartBody').addEventListener('click', e => {
     const b = e.target.closest('[data-q]'); if (b) setQty(+b.dataset.q, cart[b.dataset.q] + +b.dataset.d);
     if (e.target.closest('#browseDeals')) closeCart();
   });
   $('#cartFoot').addEventListener('click', e => {
-    if (e.target.closest('#checkout')){ toast('Checkout is not connected yet. Link this button to your payment flow.') }
+    if (e.target.closest('#checkout')) toast('Checkout is not connected yet. Link this button to your payment flow.');
   });
   let lastFocus;
   function openCart(){ lastFocus = document.activeElement; renderCart(); $('#drawer').classList.add('on'); $('#scrim').classList.add('on'); $('#drawer').setAttribute('aria-hidden','false'); $('#closeCart').focus() }
@@ -453,19 +435,19 @@
   /* ---------- Quick view ---------- */
   function openModal(id){
     const x = P.find(p=>p.id===id), c = catOf(x.c);
-    const base = x.p, others = Array.from({length: Math.min(3, x.s)}, (_, k) => base + [0, 1871, 3460][k]);
-    const names = ['TechMandi','GadgetBazaar','CityHub Electronics'];
+    const others = Array.from({length: Math.min(3, x.s)}, (_, k) => x.p + [0, 1871, 3460][k]);
+    const names = [['TechMandi','TM',2],['GadgetBazaar','GB',3],['CityHub Electronics','CH',1]];
     $('#modal').innerHTML = `
       <button class="icon-btn close" id="closeModal" aria-label="Close"><i class="ph ph-x"></i></button>
       <div class="modal-grid">
-        <div class="card-media" style="background:${c.bg};color:${c.fg}"><i class="ph-duotone ${x.i}"></i></div>
+        <div class="art">${ART(x.art, x.col)}</div>
         <div>
           <p class="caption-5 muted">${c.name}</p>
           <h2 class="heading-5" id="mTitle" style="margin:var(--s-50) 0 var(--s-75)">${x.n}</h2>
-          <div class="rating caption-5"><i class="ph-fill ph-star"></i>${x.r} · ${x.rc.toLocaleString('en-IN')} reviews</div>
-          <div class="price-row" style="margin-top:var(--s-200)"><span class="heading-5 mono">${fmt(x.p)}</span><span class="body-6 strike mono">${fmt(x.m)}</span><span class="tag caption-3">Save ${fmt(save(x))}</span></div>
+          <div class="rating caption-5"><i class="ph-fill ph-star"></i>${x.r} from ${x.rc.toLocaleString('en-IN')} reviews</div>
+          <div class="price-row" style="margin-top:var(--s-200)"><span class="ptag body-1">${fmt(x.p)}</span><span class="body-6 strike mono">${fmt(x.m)}</span><span class="caption-3 off">Save ${fmt(save(x))}</span></div>
           <p class="title-4" style="margin-top:var(--s-300)">Compare sellers</p>
-          ${others.map((pr,k)=>`<div class="seller ${k===0?'best':''}"><span class="seller-logo">${names[k].split(' ').map(w=>w[0]).join('').slice(0,2)}</span><div><p class="title-4">${names[k]}</p><p class="caption-5 muted">Delivery in ${[2,3,1][k]} day${k===2?'':'s'}</p></div><div class="price"><p class="body-4 mono">${fmt(pr)}</p>${k===0?'<span class="tag caption-3">Lowest</span>':''}</div></div>`).join('')}
+          ${others.map((pr,k)=>`<div class="seller ${k===0?'best':''}"><span class="seller-logo">${names[k][1]}</span><div><p class="title-4">${names[k][0]}</p><p class="caption-5 muted">${names[k][2]===1?'Delivery tomorrow':`Delivery in ${names[k][2]} days`}</p></div><div class="price"><p class="body-4 mono">${fmt(pr)}</p>${k===0?'<span class="caption-3" style="color:var(--brand)">Lowest</span>':''}</div></div>`).join('')}
           <button class="btn btn-primary btn-lg button-md" style="width:100%;margin-top:var(--s-300)" data-madd="${x.id}"><i class="ph-bold ph-shopping-bag"></i>Add to cart at ${fmt(x.p)}</button>
           <a href="product.html?id=${x.id}" class="btn btn-ghost button-md" style="width:100%;margin-top:var(--s-75)">See full details and price history</a>
         </div>
@@ -480,68 +462,54 @@
     const a = e.target.closest('[data-madd]'); if (a){ addToCart(+a.dataset.madd); closeModal() }
   });
 
-  /* ---------- Toast ---------- */
   let tt;
   function toast(msg){ const t = $('#toast'); t.querySelector('span').textContent = msg; t.classList.add('on'); clearTimeout(tt); tt = setTimeout(()=>t.classList.remove('on'), 2600) }
 
-  /* ---------- Countdown to midnight ---------- */
   function tick(){
     const now = new Date(), end = new Date(now); end.setHours(24,0,0,0);
-    let s = Math.floor((end - now)/1000);
-    const parts = [Math.floor(s/3600), Math.floor(s%3600/60), s%60].map(v => String(v).padStart(2,'0'));
-    $('#timer').innerHTML = parts.map(p=>`<span>${p}</span>`).join('');
+    const s = Math.floor((end - now)/1000);
+    $('#timer').innerHTML = [Math.floor(s/3600), Math.floor(s%3600/60), s%60].map(v => `<span>${String(v).padStart(2,'0')}</span>`).join('');
   }
   tick(); setInterval(tick, 1000);
 
-  /* ---------- Mobile menu ---------- */
   function closeMenu(){ document.body.classList.remove('menu-open'); $('#menuBtn').setAttribute('aria-expanded','false'); $('#mobilePanel').setAttribute('aria-hidden','true') }
   $('#menuBtn').addEventListener('click', () => {
     const open = document.body.classList.toggle('menu-open');
     $('#menuBtn').setAttribute('aria-expanded', open); $('#mobilePanel').setAttribute('aria-hidden', !open);
-    const links = [...document.querySelectorAll('.mobile-panel a')];
-    const step = Math.min(60, 400 / links.length);
+    const links = [...document.querySelectorAll('.mobile-panel a')], step = Math.min(60, 400 / links.length);
     links.forEach((a,i) => a.style.transitionDelay = open ? `${i*step}ms` : '0ms');
   });
   document.querySelectorAll('.mobile-panel a').forEach(a => a.addEventListener('click', closeMenu));
 
-  /* ---------- Theme ---------- */
-  const root = document.documentElement;
-  const savedTheme = store.get('pd_theme', null);
+  const root = document.documentElement, savedTheme = store.get('pd_theme', null);
   if (savedTheme) root.dataset.theme = savedTheme;
   const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
   const syncThemeIcon = () => $('#themeBtn').innerHTML = `<i class="ph ${isDark() ? 'ph-sun' : 'ph-moon'}"></i>`;
   syncThemeIcon();
   $('#themeBtn').addEventListener('click', () => { root.dataset.theme = isDark() ? 'light' : 'dark'; store.set('pd_theme', root.dataset.theme); syncThemeIcon() });
 
-  /* ---------- Newsletter validation ---------- */
   $('#newsForm').addEventListener('submit', e => {
     e.preventDefault();
     const input = $('#email'), msg = $('#newsMsg'), v = input.value.trim();
     const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
-    input.setAttribute('aria-invalid', !ok);
-    msg.classList.toggle('err', !ok);
+    input.setAttribute('aria-invalid', !ok); msg.classList.toggle('err', !ok);
     msg.textContent = !v ? 'Enter your email address to get price alerts.'
                     : !ok ? 'That email looks incomplete. Check it has an @ and a domain.'
                     : `Price alerts will go to ${v}.`;
     if (ok) input.value = '';
   });
 
-  /* ---------- Scroll reveals (B7) ---------- */
   const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target) } }), {threshold:.15});
   document.querySelectorAll('.rise').forEach(el => reduce ? el.classList.add('in') : io.observe(el));
 
-  /* ---------- Tagline reveal, word by word (B11) ---------- */
+  /* Tagline reveal, word by word */
   const rv = $('#reveal');
   rv.innerHTML = rv.textContent.split(' ').map(w => `<span class="w">${w}</span>`).join(' ');
   const words = [...rv.querySelectorAll('.w')];
   if (reduce) words.forEach(w => w.classList.add('on'));
   else {
     let ticking = false;
-    const update = () => {
-      const line = innerHeight * 0.62;
-      words.forEach(w => { if (w.getBoundingClientRect().top < line) w.classList.add('on') });
-      ticking = false;
-    };
+    const update = () => { const line = innerHeight * 0.62; words.forEach(w => { if (w.getBoundingClientRect().top < line) w.classList.add('on') }); ticking = false };
     addEventListener('scroll', () => { if (!ticking){ ticking = true; requestAnimationFrame(update) } }, {passive:true});
     update();
   }

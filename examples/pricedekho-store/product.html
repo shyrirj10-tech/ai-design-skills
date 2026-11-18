@@ -9,11 +9,11 @@
 <meta property="og:description" content="Lowest live price, seller comparison and price history in one place.">
 <meta property="og:image" content="og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230F6E4F'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='16' font-weight='700' fill='white' text-anchor='middle'%3EP%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M11 5h18a2 2 0 0 1 2 2v18a2 2 0 0 1-2 2H11L2 16z' fill='%23FFD43B' stroke='%230E1A2B' stroke-width='2.5' stroke-linejoin='round'/%3E%3Ccircle cx='11' cy='16' r='3' fill='%230E1A2B'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/geist.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/regular/style.css">
+<link rel="stylesheet" href="assets/bold/style.css">
+<link rel="stylesheet" href="assets/fill/style.css">
 <link rel="stylesheet" href="styles.css">
 <style>
 /* chart line colors, validated for each theme surface */
@@ -32,15 +32,16 @@
 /* gallery */
 .gallery{display:grid;gap:var(--s-100)}
 @media (min-width:960px){.gallery{position:sticky;top:104px}}
-.stage{position:relative;aspect-ratio:1/1;border-radius:var(--r-3xl);display:grid;place-items:center;font-size:200px;overflow:hidden}
-.stage i{transition:opacity .3s var(--ease),transform .5s var(--ease)}
-.stage i.swap{opacity:0;transform:scale(.96)}
+.stage{position:relative;aspect-ratio:1/1;border-radius:var(--r-3xl);display:grid;place-items:center;overflow:hidden;background:var(--surface-2)}
+.stage-art{width:72%;height:72%;transition:opacity .3s var(--ease),transform .5s var(--ease)}
+.stage-art svg{width:100%;height:100%}
+.stage-art.swap{opacity:0;transform:scale(.96)}
 .stage .tag{position:absolute;top:var(--s-200);left:var(--s-200)}
 .stage .stage-actions{position:absolute;top:var(--s-200);right:var(--s-200);display:flex;gap:var(--s-75)}
 .stage .stage-actions .icon-btn{background:var(--surface)}
 .thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-100)}
-@media (max-width:767px){.stage{aspect-ratio:4/3;font-size:120px}.thumbs{grid-template-columns:repeat(4,64px)}.thumb{font-size:28px;border-radius:var(--r-xl)}.crumbs{padding:var(--s-200) 0}}
-.thumb{aspect-ratio:1/1;border-radius:var(--r-2xl);border:1px solid var(--line);display:grid;place-items:center;font-size:40px;cursor:pointer;
+@media (max-width:767px){.stage{aspect-ratio:4/3}.thumbs{grid-template-columns:repeat(4,64px)}.thumb{font-size:28px;border-radius:var(--r-xl)}.crumbs{padding:var(--s-200) 0}}
+.thumb{aspect-ratio:1/1;border-radius:var(--r-2xl);border:1px solid transparent;display:grid;place-items:center;cursor:pointer;background:var(--surface-2);padding:var(--s-75);
   transition:border-color .3s var(--ease),transform .5s var(--ease)}
 .thumb:hover{transform:translateY(-2px)}
 .thumb[aria-pressed="true"]{border-color:var(--text);box-shadow:0 0 0 1px var(--text)}
@@ -53,7 +54,7 @@
 .rating-link:hover{color:var(--text)}
 .rating-link i{color:#E0A100}
 .price-box{margin-top:var(--s-300);padding:var(--s-300);border-radius:var(--r-2xl);background:var(--surface);border:1px solid var(--line)}
-.price-main{display:flex;align-items:baseline;gap:var(--s-100);flex-wrap:wrap;margin-top:var(--s-50)}
+.price-main{display:flex;align-items:center;gap:var(--s-100);flex-wrap:wrap;margin-top:var(--s-50)}
 .verdict{display:flex;align-items:center;gap:var(--s-75);margin-top:var(--s-200);padding:var(--s-100);border-radius:var(--r-xl);background:var(--brand-soft);color:var(--brand)}
 
 .opt{margin-top:var(--s-300)}
@@ -187,11 +188,14 @@
 </head>
 <body>
 <a class="skip button-sm" href="#main">Skip to content</a>
-<div class="announce caption-3">Free delivery on orders over Rs 2,999 · 7 day easy returns</div>
+<div class="announce caption-3">
+  <span><i class="ph-fill ph-truck"></i>Free delivery over Rs 2,999</span>
+  <span><i class="ph-fill ph-arrow-counter-clockwise"></i>7 day easy returns</span>
+</div>
 
 <div class="nav-shell">
   <nav class="nav" aria-label="Primary">
-    <a href="index.html" class="logo" aria-label="Pricedekho home"><span class="logo-mark"><i class="ph-bold ph-tag"></i></span>Pricedekho</a>
+    <a href="index.html" class="logo" aria-label="Pricedekho home"><span class="logo-mark"><svg viewBox="0 0 32 24" aria-hidden="true"><path d="M10 2h18a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H10L2 12z" fill="#FFD43B" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="10" cy="12" r="2.5" fill="currentColor"/></svg></span>Pricedekho</a>
     <div class="nav-links title-4">
       <a href="index.html">Home</a>
       <a href="index.html#categories" aria-current="page">Categories</a>
@@ -221,12 +225,12 @@
   <div class="pdp">
     <div class="gallery" aria-label="Product images">
       <div class="stage" id="stage">
-        <span class="tag caption-3" id="stageTag">Lowest price in 90 days</span>
+        <span class="tag ink caption-3" id="stageTag">Lowest price in 90 days</span>
         <div class="stage-actions">
           <button class="icon-btn" id="wishBtn" aria-pressed="false" aria-label="Save to wishlist"><i class="ph ph-heart"></i></button>
           <button class="icon-btn" id="shareBtn" aria-label="Copy link to this product"><i class="ph ph-share-network"></i></button>
         </div>
-        <i class="ph-duotone ph-device-mobile" id="stageIcon" role="img" aria-label="Front view"></i>
+        <div class="stage-art" id="stageArt"></div>
       </div>
       <div class="thumbs" id="thumbs"></div>
     </div>
@@ -240,13 +244,13 @@
       <a href="#reviews" class="rating-link body-6" id="ratingLink"><i class="ph-fill ph-star"></i><span></span></a>
 
       <div class="price-box">
-        <p class="caption-2 muted" id="sellerCount">Lowest of 4 sellers · checked 6 min ago</p>
+        <p class="caption-2 muted" id="sellerCount">Lowest of 4 sellers, checked 6 min ago</p>
         <div class="price-main">
-          <span class="heading-3 mono" id="pPrice">Rs 84,499</span>
+          <span class="ptag lg" id="pPrice">Rs 84,499</span>
           <span class="body-6 strike mono" id="pMrp">Rs 89,999</span>
           <span class="tag warm caption-3" id="pOff">6% off</span>
         </div>
-        <p class="caption-5 muted" style="margin-top:var(--s-50)">Inclusive of all taxes · or Rs <span id="emi" class="mono"></span>/month for 12 months</p>
+        <p class="caption-5 muted" style="margin-top:var(--s-50)">Inclusive of all taxes, or Rs <span id="emi" class="mono"></span>/month for 12 months</p>
         <div class="verdict body-4" id="verdict"><i class="ph-fill ph-trend-down"></i><span></span></div>
       </div>
 
@@ -277,9 +281,9 @@
         </form>
         <p class="ship-msg caption-2 muted" id="pinMsg" role="status">Usually delivered in 2 to 4 days.</p>
         <div class="perks">
-          <div class="perk"><i class="ph-duotone ph-truck"></i><span class="body-6">Free delivery on this item</span></div>
-          <div class="perk"><i class="ph-duotone ph-arrow-counter-clockwise"></i><span class="body-6">7 day returns if the seal is unbroken</span></div>
-          <div class="perk"><i class="ph-duotone ph-money"></i><span class="body-6">Cash on delivery available</span></div>
+          <div class="perk"><i class="ph ph-truck"></i><span class="body-6">Free delivery on this item</span></div>
+          <div class="perk"><i class="ph ph-arrow-counter-clockwise"></i><span class="body-6">7 day returns if the seal is unbroken</span></div>
+          <div class="perk"><i class="ph ph-money"></i><span class="body-6">Cash on delivery available</span></div>
         </div>
       </div>
     </div>
@@ -331,7 +335,7 @@
         <table class="body-6"><thead><tr><th class="title-4">Week starting</th><th class="title-4">Lowest price</th></tr></thead><tbody id="tbl"></tbody></table>
       </details>
       <form class="alert-form" id="alertForm" novalidate>
-        <i class="ph-duotone ph-bell-ringing" style="font-size:24px;color:var(--brand)"></i>
+        <i class="ph ph-bell-ringing" style="font-size:24px;color:var(--brand)"></i>
         <label for="target" class="title-4">Alert me when it drops to</label>
         <div class="field"><span class="body-6 muted">Rs</span><input id="target" inputmode="numeric" class="body-6 mono" aria-describedby="alertMsg"></div>
         <button class="btn btn-ghost button-sm" type="submit">Set price alert</button>
@@ -350,10 +354,10 @@
 
     <div class="tabpanel" id="p-ov" role="tabpanel" aria-labelledby="t-ov">
       <div class="highlights">
-        <div class="hl"><i class="ph-duotone ph-camera"></i><div><h3 class="title-2">50 MP main camera</h3><p class="body-6 muted">Optical stabilisation keeps night shots sharp, with a 3x telephoto for portraits.</p></div></div>
-        <div class="hl"><i class="ph-duotone ph-battery-charging"></i><div><h3 class="title-2">5,000 mAh battery</h3><p class="body-6 muted">A full day of heavy use, and 0 to 50% in about 22 minutes with the 67 W charger.</p></div></div>
-        <div class="hl"><i class="ph-duotone ph-device-mobile"></i><div><h3 class="title-2">6.7 inch 120 Hz display</h3><p class="body-6 muted">AMOLED panel that reaches 1,800 nits outdoors, so it stays readable in direct sun.</p></div></div>
-        <div class="hl"><i class="ph-duotone ph-cpu"></i><div><h3 class="title-2">12 GB RAM</h3><p class="body-6 muted">Keeps games and dozens of apps open without reloading when you switch back.</p></div></div>
+        <div class="hl"><i class="ph ph-camera"></i><div><h3 class="title-2">50 MP main camera</h3><p class="body-6 muted">Optical stabilisation keeps night shots sharp, with a 3x telephoto for portraits.</p></div></div>
+        <div class="hl"><i class="ph ph-battery-charging"></i><div><h3 class="title-2">5,000 mAh battery</h3><p class="body-6 muted">A full day of heavy use, and 0 to 50% in about 22 minutes with the 67 W charger.</p></div></div>
+        <div class="hl"><i class="ph ph-device-mobile"></i><div><h3 class="title-2">6.7 inch 120 Hz display</h3><p class="body-6 muted">AMOLED panel that reaches 1,800 nits outdoors, so it stays readable in direct sun.</p></div></div>
+        <div class="hl"><i class="ph ph-cpu"></i><div><h3 class="title-2">12 GB RAM</h3><p class="body-6 muted">Keeps games and dozens of apps open without reloading when you switch back.</p></div></div>
       </div>
     </div>
 
@@ -422,6 +426,7 @@
 <div class="toast body-4" id="toast" role="status"><i class="ph-fill ph-check-circle"></i><span></span></div>
 
 <script src="data.js"></script>
+<script src="art.js"></script>
 <script>
 (() => {
   const $ = s => document.querySelector(s);
@@ -431,7 +436,7 @@
     get(k, d){ try { return JSON.parse(localStorage.getItem(k)) ?? d } catch { return d } },
     set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)) } catch {} }
   };
-  const {CATS, P} = window;
+  const {CATS, P, ART} = window;
   const catOf = id => CATS.find(c => c.id === id);
 
   /* ---------- Which product ---------- */
@@ -463,33 +468,39 @@
   document.title = `${x.n} · Compare prices · Pricedekho`;
   $('#crumbCat').textContent = c.name; $('#crumbName').textContent = x.n;
   $('#catTag').textContent = c.name; $('#pName').textContent = x.n;
-  $('#ratingLink span').textContent = `${x.r} · ${x.rc.toLocaleString('en-IN')} ratings`;
-  $('#stage').style.cssText = `background:${c.bg};color:${c.fg}`;
+  $('#ratingLink span').textContent = `${x.r} from ${x.rc.toLocaleString("en-IN")} ratings`;
 
-  const VIEWS = [
-    {i:x.i, l:'Front view'},
-    {i: x.c==='phones' ? 'ph-device-mobile-camera' : x.i, l:'Back view'},
-    {i: x.c==='phones' ? 'ph-device-mobile-speaker' : x.i, l:'Side view'},
-    {i:'ph-package', l:'In the box'},
-  ];
-  $('#thumbs').innerHTML = VIEWS.map((v,k) =>
-    `<button class="thumb" style="background:${c.bg};color:${c.fg}" data-v="${k}" aria-pressed="${k===0}" aria-label="${v.l}"><i class="ph-duotone ${v.i}"></i></button>`).join('');
-  $('#stageIcon').className = `ph-duotone ${x.i}`;
+  /* first swatch is the product's own finish; drop any duplicate of it */
+  const dup = COLORS.findIndex(k => k.h.toLowerCase() === x.col.toLowerCase());
+  const own = {n: dup >= 0 ? COLORS[dup].n : ({'#3A3F47':'Graphite','#FFFFFF':'White','#C9CED6':'Silver'}[x.col] || 'Original'), h: x.col};
+  if (dup >= 0) COLORS.splice(dup, 1);
+  COLORS.splice(0, 1, own);
+  const VIEWS = x.art === 'phone' ? [{v:'front', l:'Front view'},{v:'back', l:'Back view'},{v:'box', l:'In the box'}]
+                                  : [{v:'front', l:'Product view'},{v:'box', l:'In the box'}];
+  let view = 0;
+  const paintStage = animate => {
+    const el = $('#stageArt'), draw = () => { el.innerHTML = ART(x.art, COLORS[color].h, VIEWS[view].v); el.classList.remove('swap') };
+    if (animate && !reduce){ el.classList.add('swap'); setTimeout(draw, 180) } else draw();
+  };
+  const paintThumbs = () => $('#thumbs').innerHTML = VIEWS.map((v,k) =>
+    `<button class="thumb" data-v="${k}" aria-pressed="${k===view}" aria-label="${v.l}">${ART(x.art, COLORS[color].h, v.v)}</button>`).join('');
+  paintStage(); paintThumbs();
   $('#thumbs').addEventListener('click', e => {
     const b = e.target.closest('.thumb'); if (!b) return;
+    view = +b.dataset.v;
     document.querySelectorAll('.thumb').forEach(t => t.setAttribute('aria-pressed', t === b));
-    const icon = $('#stageIcon'), v = VIEWS[+b.dataset.v];
-    icon.classList.add('swap');
-    setTimeout(() => { icon.className = `ph-duotone ${v.i}`; icon.setAttribute('aria-label', v.l) }, reduce ? 0 : 180);
+    paintStage(true);
   });
 
   $('#swatches').innerHTML = COLORS.map((s,k) =>
     `<button class="swatch" style="background:${s.h}" data-c="${k}" aria-pressed="${k===0}" aria-label="${s.n}"></button>`).join('');
+  $('#colorName').textContent = COLORS[0].n;
   $('#swatches').addEventListener('click', e => {
     const b = e.target.closest('.swatch'); if (!b) return;
     color = +b.dataset.c;
     document.querySelectorAll('.swatch').forEach(s => s.setAttribute('aria-pressed', s === b));
     $('#colorName').textContent = COLORS[color].n;
+    paintStage(true); paintThumbs();
   });
 
   function renderSizes(){
@@ -509,8 +520,8 @@
     const u = unit(), m = x.m + SIZES[size].d, off = Math.round((m - u) / m * 100);
     $('#pPrice').textContent = fmt(u); $('#pMrp').textContent = fmt(m); $('#pOff').textContent = `${off}% off`;
     $('#emi').textContent = Math.round(u / 12).toLocaleString('en-IN');
-    $('#sellerCount').textContent = `Lowest of ${SELLERS.length} sellers · checked 6 min ago`;
-    $('#bbPrice').textContent = fmt(u); $('#bbSub').textContent = `${SIZES[size].n} · lowest of ${SELLERS.length}`;
+    $('#sellerCount').textContent = `Lowest of ${SELLERS.length} sellers, checked 6 min ago`;
+    $('#bbPrice').textContent = fmt(u); $('#bbSub').textContent = `${SIZES[size].n}, lowest of ${SELLERS.length}`;
   }
 
   /* qty */
@@ -748,11 +759,11 @@
   const sim = P.filter(p => p.id !== x.id).sort((a,b) => (b.c===x.c) - (a.c===x.c) || b.pop - a.pop).slice(0, 6);
   $('#similar').innerHTML = sim.map(p => { const cc = catOf(p.c); return `
     <article class="card">
-      <a class="card-media" href="product.html?id=${p.id}" style="background:${cc.bg};color:${cc.fg}" aria-label="${p.n}"><i class="ph-duotone ${p.i}"></i></a>
+      <a class="card-media" href="product.html?id=${p.id}" aria-label="${p.n}">${ART(p.art, p.col)}<span class="ptag body-1">${fmt(p.p)}</span></a>
       <div class="card-body">
         <h3 class="title-3"><a href="product.html?id=${p.id}" class="card-link">${p.n}</a></h3>
         <div class="rating caption-5"><i class="ph-fill ph-star"></i>${p.r}</div>
-        <div class="price-row"><span class="body-1 mono">${fmt(p.p)}</span><span class="caption-5 strike mono">${fmt(p.m)}</span></div>
+        <div class="price-row caption-5"><span class="strike mono">${fmt(p.m)}</span></div>
         <div class="sellers-note caption-5"><i class="ph ph-storefront"></i>Lowest of ${p.s} sellers</div>
       </div>
     </article>`}).join('');
@@ -773,12 +784,12 @@
   function renderCart(){
     const ids = Object.keys(cart).map(Number);
     if (!ids.length){
-      $('#cartBody').innerHTML = `<div class="empty" style="border:0;padding:var(--s-700) 0"><i class="ph-duotone ph-shopping-bag-open"></i><h3 class="heading-6" style="margin-top:var(--s-200)">Your cart is empty</h3><p class="body-6 muted">Add this product or browse today's deals.</p><a href="index.html#deals" class="btn btn-primary button-sm">Browse deals</a></div>`;
+      $('#cartBody').innerHTML = `<div class="empty" style="border:0;padding:var(--s-700) 0"><i class="ph ph-shopping-bag-open"></i><h3 class="heading-6" style="margin-top:var(--s-200)">Your cart is empty</h3><p class="body-6 muted">Add this product or browse today's deals.</p><a href="index.html#deals" class="btn btn-primary button-sm">Browse deals</a></div>`;
       $('#cartFoot').innerHTML = ''; return;
     }
     let sub = 0;
     $('#cartBody').innerHTML = ids.map(i => { const p = P.find(q=>q.id===i), cc = catOf(p.c), q = cart[i]; sub += p.p*q;
-      return `<div class="line-item"><div class="prod-art" style="background:${cc.bg};color:${cc.fg}"><i class="ph-duotone ${p.i}"></i></div>
+      return `<div class="line-item"><div class="art">${ART(p.art, p.col)}</div>
         <div style="flex:1;min-width:0"><p class="title-4">${p.n}</p><p class="caption-5 muted">Qty ${q}</p></div><p class="body-4 mono">${fmt(p.p*q)}</p></div>` }).join('');
     $('#cartFoot').innerHTML = `<div class="row body-1"><span>Subtotal</span><span class="mono">${fmt(sub)}</span></div>
       <a href="index.html" class="btn btn-primary btn-lg button-md">Go to checkout <i class="ph-bold ph-lock-simple"></i></a>`;
